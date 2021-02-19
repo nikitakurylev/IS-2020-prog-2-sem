@@ -22,6 +22,7 @@ private:
 
 double distance(Point p1, Point p2);
 
+//we need destructor
 class PolygonalChain {
 public:
 	PolygonalChain();

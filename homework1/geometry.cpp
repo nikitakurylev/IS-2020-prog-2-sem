@@ -1,6 +1,8 @@
 #include "geometry.h"
 #include <math.h>
 
+
+// S P A C E S
 double distance(Point p1, Point p2) {
 	return sqrt(pow(double(p2.getX()) - p1.getX(), 2) + pow(double(p2.getY()) - p1.getY(), 2));
 }
@@ -25,6 +27,8 @@ double PolygonalChain::perimeter() const {
 	}
 	return length;
 }
+
+//private method PolygonalChain
 Point* addPoint(Point* points, int size, Point point) {
 	Point* result = new Point[size+1];
 	for (int i = 0; i < size; i++)
@@ -55,5 +59,6 @@ bool Triangle::hasRightAngle() const {
 	return false;
 }
 double Trapezoid::height() const {
-	return area()/(distance(points[1],points[2])+distance(points[3],points[0]))*2;
+	return area() / (distance(points[1],points[2])+distance(points[3],points[0]))*2;
 }
+//Regular Polygon area perimeter
