@@ -1,25 +1,34 @@
 #include "geometry.h"
 #include <math.h>
 
-
-// S P A C E S
+// S P A C E S - done
 double distance(Point p1, Point p2) {
 	return sqrt(pow(double(p2.getX()) - p1.getX(), 2) + pow(double(p2.getY()) - p1.getY(), 2));
 }
 
 PolygonalChain::PolygonalChain() {
 	size = 0;
-	points = NULL;
+	points = new Point[1];
 }
-
 
 PolygonalChain::PolygonalChain(int numberOfPoints, Point* chainPoints) {
 	size = numberOfPoints;
 	points = new Point[numberOfPoints];
-	points[0] = chainPoints[0];
-	for (int i = 1; i < numberOfPoints; i++)
+	for (int i = 0; i < numberOfPoints; i++)
 		points[i] = chainPoints[i];
 }
+
+PolygonalChain::PolygonalChain(const PolygonalChain& obj) {
+	size = obj.size;
+	points = new Point[size];
+	for (int i = 0; i < size; i++)
+		points[i] = obj.points[i];
+}
+
+PolygonalChain::~PolygonalChain() {
+	delete[] points;
+}
+
 double PolygonalChain::perimeter() const {
 	double length = 0;
 	for (int i = 1; i < size; i++) {
@@ -28,17 +37,15 @@ double PolygonalChain::perimeter() const {
 	return length;
 }
 
-//private method PolygonalChain
-Point* addPoint(Point* points, int size, Point point) {
-	Point* result = new Point[size+1];
-	for (int i = 0; i < size; i++)
-		result[i] = points[i];
-	result[size] = point;
-	return result;
+double ClosedPolygonalChain::perimeter() const {
+	double length = 0;
+	for (int i = 1; i < size; i++) {
+		length += distance(points[i - 1], points[i]);
+	}
+	return length + distance(points[0], points[size - 1]);
 }
 
-
-double Polygon::area() const{
+double Polygon::area() const {
 	double polygonArea = 0;
 	for (int i = 0; i < getN(); i++) {
 		int j = (i + 1) % getN();
@@ -59,6 +66,12 @@ bool Triangle::hasRightAngle() const {
 	return false;
 }
 double Trapezoid::height() const {
-	return area() / (distance(points[1],points[2])+distance(points[3],points[0]))*2;
+	return area() / (distance(points[1], points[2]) + distance(points[3], points[0])) * 2;
 }
-//Regular Polygon area perimeter
+//Regular Polygon area perimeter - done
+double RegularPolygon::perimeter() const {
+	return distance(points[0], points[1]) * getN();
+}
+double RegularPolygon::area() const {
+	return pow(distance(points[0], points[1]), 2) * getN() / 4 / tan(3.14159265359 / getN());
+}

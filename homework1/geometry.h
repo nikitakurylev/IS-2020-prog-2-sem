@@ -2,7 +2,7 @@
 #define GEOMETRY_H
 class Point {
 public:
-	Point(int positionX = 0.0, int positionY = 0.0)
+	Point(int positionX = 0, int positionY = 0)
 		: x(positionX)
 		, y(positionY)
 	{}
@@ -13,7 +13,7 @@ public:
 		return y;
 	}
 	Point operator - (Point const& obj) {
-		return Point(getX()-obj.getX(), getY()-obj.getY());
+		return Point(getX() - obj.getX(), getY() - obj.getY());
 	}
 private:
 	int x;
@@ -22,12 +22,14 @@ private:
 
 double distance(Point p1, Point p2);
 
-//we need destructor
+//we need destructor - done
 class PolygonalChain {
 public:
 	PolygonalChain();
 	PolygonalChain(int numberOfPoints, Point* chainPoints);
-	double perimeter() const;
+	PolygonalChain(const PolygonalChain& obj);
+	~PolygonalChain();
+	virtual double perimeter() const;
 	int getN() const {
 		return size;
 	}
@@ -38,13 +40,10 @@ protected:
 	int size;
 	Point* points;
 };
-Point* addPoint(Point* points, int size, Point point);
 class ClosedPolygonalChain : public PolygonalChain {
 public:
-	ClosedPolygonalChain(int numberOfPoints, Point* closedChainPoints) : PolygonalChain(numberOfPoints+1, addPoint(closedChainPoints,numberOfPoints, closedChainPoints[0])) {}
-	int getN() const {
-		return size-1;
-	}
+	ClosedPolygonalChain(int numberOfPoints, Point* closedChainPoints) : PolygonalChain(numberOfPoints, closedChainPoints) {}
+	double perimeter() const;
 };
 class Polygon : public ClosedPolygonalChain {
 public:
@@ -53,7 +52,7 @@ public:
 };
 class Triangle : public Polygon {
 public:
-	Triangle (int numberOfPoints, Point* trianglePoints) : Polygon(numberOfPoints, trianglePoints){}
+	Triangle(int numberOfPoints, Point* trianglePoints) : Polygon(numberOfPoints, trianglePoints) {}
 	bool hasRightAngle() const;
 };
 class Trapezoid : public Polygon {
@@ -63,7 +62,9 @@ public:
 };
 class RegularPolygon : public Polygon {
 public:
-	RegularPolygon(int numberOfPoints, Point* regularPolygonPoints) : Polygon(numberOfPoints, regularPolygonPoints){}
+	RegularPolygon(int numberOfPoints, Point* regularPolygonPoints) : Polygon(numberOfPoints, regularPolygonPoints) {}
+	double perimeter() const;
+	double area() const;
 };
 
 #endif
