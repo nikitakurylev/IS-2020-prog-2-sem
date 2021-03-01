@@ -43,7 +43,7 @@ protected:
 class ClosedPolygonalChain : public PolygonalChain {
 public:
 	ClosedPolygonalChain(int numberOfPoints, Point* closedChainPoints) : PolygonalChain(numberOfPoints, closedChainPoints) {}
-	double perimeter() const;
+	double perimeter() const override;
 };
 class Polygon : public ClosedPolygonalChain {
 public:
