@@ -37,24 +37,20 @@ double PolygonalChain::perimeter() const {
 }
 
 double ClosedPolygonalChain::perimeter() const {
-	//todo from base class
-	double length = 0;
-	for (int i = 1; i < size; i++) {
-		length += distance(points[i - 1], points[i]);
-	}
+	//fixed from base class
+	double length = PolygonalChain::perimeter();
 	return length + distance(points[0], points[size - 1]);
 }
 
 double Polygon::area() const {
-	//todo u dont need doubles here
-	double polygonArea = 0;
+	//fixed u dont need doubles here
+	int polygonArea = 0;
 	for (int i = 0; i < getN(); i++) {
 		int j = (i + 1) % getN();
-		polygonArea -= double(points[i].getX()) * points[j].getY();
-		polygonArea += double(points[i].getY()) * points[j].getX();
+		polygonArea -= points[i].getX() * points[j].getY();
+		polygonArea += points[i].getY() * points[j].getX();
 	}
-	polygonArea /= 2;
-	return polygonArea;
+	return polygonArea / 2.0;
 }
 
 bool Triangle::hasRightAngle() const {

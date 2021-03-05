@@ -22,14 +22,14 @@ private:
 
 double distance(Point p1, Point p2);
 
-//we need destructor - done
+//fixed we need destructor
 class PolygonalChain {
 public:
 	PolygonalChain();
 	PolygonalChain(int numberOfPoints, Point* chainPoints);
 	PolygonalChain(const PolygonalChain& obj);
-	//todo destructor must be virtual
-	~PolygonalChain();
+	//fixed destructor must be virtual
+	virtual ~PolygonalChain();
 	virtual double perimeter() const;
 	int getN() const {
 		return size;
