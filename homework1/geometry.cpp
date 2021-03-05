@@ -1,7 +1,6 @@
 #include "geometry.h"
 #include <math.h>
 
-// S P A C E S - done
 double distance(Point p1, Point p2) {
 	return sqrt(pow(double(p2.getX()) - p1.getX(), 2) + pow(double(p2.getY()) - p1.getY(), 2));
 }
@@ -38,6 +37,7 @@ double PolygonalChain::perimeter() const {
 }
 
 double ClosedPolygonalChain::perimeter() const {
+	//todo from base class
 	double length = 0;
 	for (int i = 1; i < size; i++) {
 		length += distance(points[i - 1], points[i]);
@@ -46,6 +46,7 @@ double ClosedPolygonalChain::perimeter() const {
 }
 
 double Polygon::area() const {
+	//todo u dont need doubles here
 	double polygonArea = 0;
 	for (int i = 0; i < getN(); i++) {
 		int j = (i + 1) % getN();
@@ -68,7 +69,7 @@ bool Triangle::hasRightAngle() const {
 double Trapezoid::height() const {
 	return area() / (distance(points[1], points[2]) + distance(points[3], points[0])) * 2;
 }
-//Regular Polygon area perimeter - done
+
 double RegularPolygon::perimeter() const {
 	return distance(points[0], points[1]) * getN();
 }

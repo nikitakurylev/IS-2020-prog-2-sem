@@ -28,6 +28,7 @@ public:
 	PolygonalChain();
 	PolygonalChain(int numberOfPoints, Point* chainPoints);
 	PolygonalChain(const PolygonalChain& obj);
+	//todo destructor must be virtual
 	~PolygonalChain();
 	virtual double perimeter() const;
 	int getN() const {
