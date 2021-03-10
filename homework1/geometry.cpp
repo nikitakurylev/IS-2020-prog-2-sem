@@ -50,7 +50,7 @@ double Polygon::area() const {
 		polygonArea -= points[i].getX() * points[j].getY();
 		polygonArea += points[i].getY() * points[j].getX();
 	}
-	return polygonArea / 2.0;
+	return abs(polygonArea) / 2.0;
 }
 
 bool Triangle::hasRightAngle() const {
