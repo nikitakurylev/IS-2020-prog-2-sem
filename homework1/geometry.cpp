@@ -37,13 +37,11 @@ double PolygonalChain::perimeter() const {
 }
 
 double ClosedPolygonalChain::perimeter() const {
-	//fixed from base class
 	double length = PolygonalChain::perimeter();
 	return length + distance(points[0], points[size - 1]);
 }
 
 double Polygon::area() const {
-	//fixed u dont need doubles here
 	int polygonArea = 0;
 	for (int i = 0; i < getN(); i++) {
 		int j = (i + 1) % getN();

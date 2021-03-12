@@ -26,9 +26,9 @@ double distance(Point p1, Point p2);
 class PolygonalChain {
 public:
 	PolygonalChain();
+	//todo operator=
 	PolygonalChain(int numberOfPoints, Point* chainPoints);
 	PolygonalChain(const PolygonalChain& obj);
-	//fixed destructor must be virtual
 	virtual ~PolygonalChain();
 	virtual double perimeter() const;
 	int getN() const {
@@ -41,6 +41,7 @@ protected:
 	int size;
 	Point* points;
 };
+
 class ClosedPolygonalChain : public PolygonalChain {
 public:
 	ClosedPolygonalChain(int numberOfPoints, Point* closedChainPoints) : PolygonalChain(numberOfPoints, closedChainPoints) {}
