@@ -1,0 +1,29 @@
+Pulling https://github.com/nikitakurylev/IS-2020-prog-2-sem/homework1
+Pull finished
+It's compiled
+Return code: 3
+Assertion failed: floatArea.area() == 0.5, file main.cpp, line 50
+
+In file included from main.cpp:1:
+geometry.h: In member function 'constexpr ClosedPolygonalChain& ClosedPolygonalChain::operator=(const ClosedPolygonalChain&)':
+geometry.h:44:7: warning: implicitly-declared 'constexpr PolygonalChain& PolygonalChain::operator=(const PolygonalChain&)' is deprecated [-Wdeprecated-copy]
+   44 | class ClosedPolygonalChain : public PolygonalChain {
+      |       ^~~~~~~~~~~~~~~~~~~~
+geometry.h:30:2: note: because 'PolygonalChain' has user-provided 'PolygonalChain::PolygonalChain(const PolygonalChain&)'
+   30 |  PolygonalChain(const PolygonalChain& obj);
+      |  ^~~~~~~~~~~~~~
+geometry.h: In member function 'constexpr Polygon& Polygon::operator=(const Polygon&)':
+geometry.h:49:7: note: synthesized method 'constexpr ClosedPolygonalChain& ClosedPolygonalChain::operator=(const ClosedPolygonalChain&)' first required here
+   49 | class Polygon : public ClosedPolygonalChain {
+      |       ^~~~~~~
+geometry.h: In member function 'constexpr Trapezoid& Trapezoid::operator=(const Trapezoid&)':
+geometry.h:59:7: note: synthesized method 'constexpr Polygon& Polygon::operator=(const Polygon&)' first required here
+   59 | class Trapezoid : public Polygon {
+      |       ^~~~~~~~~
+main.cpp: In function 'void PolygonsCheck()':
+main.cpp:43:11: note: synthesized method 'constexpr Trapezoid& Trapezoid::operator=(const Trapezoid&)' first required here
+   43 |     tra = tr;
+      |           ^~
+
+
+
