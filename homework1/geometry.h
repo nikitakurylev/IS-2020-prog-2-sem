@@ -26,9 +26,10 @@ double distance(Point p1, Point p2);
 class PolygonalChain {
 public:
 	PolygonalChain();
-	//todo operator=
+	//fixed operator=
 	PolygonalChain(int numberOfPoints, Point* chainPoints);
 	PolygonalChain(const PolygonalChain& obj);
+	virtual PolygonalChain& operator= (const PolygonalChain& obj);
 	virtual ~PolygonalChain();
 	virtual double perimeter() const;
 	int getN() const {
@@ -37,6 +38,8 @@ public:
 	Point getPoint(int index) const {
 		return points[index];
 	}
+private:
+	void Build(int numberOfPoints, Point* chainPoints);
 protected:
 	int size;
 	Point* points;

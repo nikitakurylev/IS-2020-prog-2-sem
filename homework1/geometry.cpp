@@ -10,19 +10,28 @@ PolygonalChain::PolygonalChain() {
 	points = new Point[1];
 }
 
-PolygonalChain::PolygonalChain(int numberOfPoints, Point* chainPoints) {
+
+void PolygonalChain::Build(int numberOfPoints, Point* chainPoints) {
 	size = numberOfPoints;
 	points = new Point[numberOfPoints];
 	for (int i = 0; i < numberOfPoints; i++)
 		points[i] = chainPoints[i];
 }
 
-PolygonalChain::PolygonalChain(const PolygonalChain& obj) {
-	size = obj.size;
-	points = new Point[size];
-	for (int i = 0; i < size; i++)
-		points[i] = obj.points[i];
+PolygonalChain::PolygonalChain(int numberOfPoints, Point* chainPoints) {
+	Build(numberOfPoints, chainPoints);
 }
+
+
+PolygonalChain::PolygonalChain(const PolygonalChain& obj) {
+	Build(obj.size, obj.points);
+}
+
+PolygonalChain& PolygonalChain::operator=(const PolygonalChain& obj) {
+	Build(obj.size, obj.points);
+	return *this;
+}
+
 
 PolygonalChain::~PolygonalChain() {
 	delete[] points;
