@@ -48,26 +48,31 @@ protected:
 class ClosedPolygonalChain : public PolygonalChain {
 public:
 	ClosedPolygonalChain(int numberOfPoints, Point* closedChainPoints) : PolygonalChain(numberOfPoints, closedChainPoints) {}
+	virtual ClosedPolygonalChain& operator= (const ClosedPolygonalChain& obj) = default;
 	double perimeter() const override;
 };
 class Polygon : public ClosedPolygonalChain {
 public:
 	Polygon(int numberOfPoints, Point* polygonPoints) : ClosedPolygonalChain(numberOfPoints, polygonPoints) {}
+	virtual Polygon& operator= (const Polygon& obj) = default;
 	double area() const;
 };
 class Triangle : public Polygon {
 public:
 	Triangle(int numberOfPoints, Point* trianglePoints) : Polygon(numberOfPoints, trianglePoints) {}
+	virtual Triangle& operator= (const Triangle& obj) = default;
 	bool hasRightAngle() const;
 };
 class Trapezoid : public Polygon {
 public:
 	Trapezoid(int numberOfPoints, Point* trapezoidPoints) : Polygon(numberOfPoints, trapezoidPoints) {}
+	virtual Trapezoid& operator= (const Trapezoid& obj) = default;
 	double height() const;
 };
 class RegularPolygon : public Polygon {
 public:
 	RegularPolygon(int numberOfPoints, Point* regularPolygonPoints) : Polygon(numberOfPoints, regularPolygonPoints) {}
+	virtual RegularPolygon& operator= (const RegularPolygon& obj) = default;
 	double perimeter() const;
 	double area() const;
 };
