@@ -1,4 +1,5 @@
 #include "polynomial.h"
+#include <math.h>
 
 Polynomial::~Polynomial() {
 	delete[] factors;
