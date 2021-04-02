@@ -25,7 +25,7 @@ Polynomial& Polynomial::operator=(const Polynomial& other) {
 }
 
 //fixed return int
-const int Polynomial::operator[](int idx) const {
+int Polynomial::operator[](int idx) const {
 	if (idx<min || idx > max)
 		return 0;
 	return factors[idx - min];

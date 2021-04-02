@@ -20,7 +20,7 @@ public:
 	virtual ~Polynomial();
 	virtual Polynomial& operator= (const Polynomial& other);
 
-	const int operator[](int idx) const;
+	int operator[](int idx) const;
 	int& operator[](int idx);
 	friend const Polynomial operator-(const Polynomial& obj);
 
