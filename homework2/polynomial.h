@@ -26,6 +26,7 @@ public:
 	friend const bool operator==(const Polynomial& left, const Polynomial& right);
 
 	friend const Polynomial operator*(const Polynomial& left, const Polynomial& right);
+	//todo + from +=
 	friend const Polynomial operator+(const Polynomial& left, const Polynomial& right);
 	friend const Polynomial operator*(const Polynomial& left, const int& right);
 	friend const Polynomial operator/(const Polynomial& left, const int& right);
