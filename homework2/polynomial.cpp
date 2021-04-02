@@ -1,22 +1,31 @@
 #include "polynomial.h"
 #include <math.h>
 
+void Polynomial::Build(int minPower, int maxPower, int* factorsArray) {
+	min = minPower;
+	max = maxPower;
+	int count = max - min + 1;
+	factors = new int[count];
+	for (int i = 0; i < count; i++)
+		factors[i] = factorsArray[i];
+}
+
+Polynomial::Polynomial(const Polynomial& other) {
+	Build(other.min, other.max, other.factors);
+}
+
 Polynomial::~Polynomial() {
 	delete[] factors;
 }
 
-Polynomial& Polynomial::operator=(const Polynomial& obj) {
-	min = obj.min;
-	max = obj.max;
-	int count = max - min + 1;
-	factors = new int[count];
-	for (int i = 0; i < count; i++)
-		factors[i] = obj.factors[i];
+Polynomial& Polynomial::operator=(const Polynomial& other) {
+	if (this != &other)
+		Build(other.min, other.max, other.factors);
 	return *this;
 }
 
-//todo return int
-const int& Polynomial::operator[](int idx) const {
+//fixed return int
+const int Polynomial::operator[](int idx) const {
 	if (idx<min || idx > max)
 		return 0;
 	return factors[idx - min];
@@ -48,8 +57,8 @@ const Polynomial operator-(const Polynomial& obj) {
 	return obj * (-1);
 }
 
-//todo const bool ???
-const bool operator==(const Polynomial& left, const Polynomial& right)
+//fixed const bool ???
+bool operator==(const Polynomial& left, const Polynomial& right)
 {
 	int min = std::min(left.min, right.min);
 	int max = std::max(left.max, right.max);
@@ -77,15 +86,13 @@ const Polynomial operator+(const Polynomial& left, const Polynomial& right) {
 	int min = std::min(left.min, right.min);
 	int max = std::max(left.max, right.max);
 	int* factors = new int[max - min + 1];
-	for (int i = min; i <= max; i++) {
-		int a = left[i], b = right[i];
-		factors[i - min] = a + b;
-	}
+	for (int i = min; i <= max; i++)
+		factors[i - min] = left[i] + right[i];
 	return Polynomial(min, max, factors);
 }
 
-//todo int not const int&
-const Polynomial operator*(const Polynomial& left, const int& right) {
+//fixed int not const int&
+const Polynomial operator*(const Polynomial& left, int right) {
 	int count = left.max - left.min + 1;
 	int* factors = new int[count];
 	for (int i = 0; i < count; i++)
@@ -93,7 +100,7 @@ const Polynomial operator*(const Polynomial& left, const int& right) {
 	return Polynomial(left.min, left.max, factors);
 }
 
-const Polynomial operator/(const Polynomial& left, const int& right) {
+const Polynomial operator/(const Polynomial& left, const int right) {
 	int count = left.max - left.min + 1;
 	int* factors = new int[count];
 	for (int i = 0; i < count; i++)
@@ -101,14 +108,11 @@ const Polynomial operator/(const Polynomial& left, const int& right) {
 	return Polynomial(left.min, left.max, factors);
 }
 
-const Polynomial operator*(const int& left, const Polynomial& right) {
+const Polynomial operator*(const int left, const Polynomial& right) {
 	return right * left;
 }
 
-//todo what???
-const Polynomial operator/(const int& left, const Polynomial& right) {
-	return right / left;
-}
+//fixed what???
 
 std::ostream& operator<<(std::ostream& os, const Polynomial& obj){
 	if (obj.max - obj.min == 0 && obj.factors[0] == 0) {
@@ -134,10 +138,13 @@ std::ostream& operator<<(std::ostream& os, const Polynomial& obj){
 	return os;
 }
 
-//todo O(n)
+//fixed O(n)
 double Polynomial::get(int x) {
 	double result = 0;
-	for (int i = 0; i <= max - min; i++)
-		result += factors[i] * pow(x, i + min);
+	double xpow = pow(x, min);
+	for (int i = 0; i <= max - min; i++) {
+		result += double(factors[i]) * xpow;
+		xpow *= x;
+	}
 	return result;
 }

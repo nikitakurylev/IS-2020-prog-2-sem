@@ -15,24 +15,23 @@ public:
 		, max(0)
 		, factors(new int[1]{ 0 })
 	{}
-	
-	virtual ~Polynomial();
-	virtual Polynomial& operator= (const Polynomial& obj);
 
-	const int& operator[](int idx) const;
+	Polynomial(const Polynomial& other);
+	virtual ~Polynomial();
+	virtual Polynomial& operator= (const Polynomial& other);
+
+	const int operator[](int idx) const;
 	int& operator[](int idx);
 	friend const Polynomial operator-(const Polynomial& obj);
 
-	friend const bool operator==(const Polynomial& left, const Polynomial& right);
+	friend bool operator==(const Polynomial& left, const Polynomial& right);
 
 	friend const Polynomial operator*(const Polynomial& left, const Polynomial& right);
-	//todo + from +=
 	friend const Polynomial operator+(const Polynomial& left, const Polynomial& right);
-	friend const Polynomial operator*(const Polynomial& left, const int& right);
-	friend const Polynomial operator/(const Polynomial& left, const int& right);
-	friend const Polynomial operator*(const int& left, const Polynomial& right);
-	friend const Polynomial operator/(const int& left, const Polynomial& right);	
-	
+	friend const Polynomial operator*(const Polynomial& left, const int right);
+	friend const Polynomial operator/(const Polynomial& left, const int right);
+	friend const Polynomial operator*(const int left, const Polynomial& right);
+
 	friend std::ostream& operator<<(std::ostream& os, const Polynomial& obj);
 
 	double get(int x);
@@ -40,5 +39,6 @@ public:
 private:
 	int min, max;
 	int* factors;
+	void Build(int minPower, int maxPower, int* factorsArray);
 };
 #endif
