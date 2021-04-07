@@ -24,6 +24,16 @@ Polynomial& Polynomial::operator=(const Polynomial& other) {
 	return *this;
 }
 
+Polynomial& Polynomial::operator+=(const Polynomial& other) {
+	int newmin = std::min(other.min, min);
+	int newmax = std::max(other.max, max);
+	int* newfactors = new int[newmax - newmin + 1];
+	for (int i = newmin; i <= newmax; i++)
+		newfactors[i - newmin] = (*this)[i] + other[i];
+	Build(newmin, newmax, newfactors);
+	return *this;
+}
+
 //fixed return int
 int Polynomial::operator[](int idx) const {
 	if (idx<min || idx > max)
@@ -83,12 +93,9 @@ const Polynomial operator*(const Polynomial& left, const Polynomial& right) {
 
 
 const Polynomial operator+(const Polynomial& left, const Polynomial& right) {
-	int min = std::min(left.min, right.min);
-	int max = std::max(left.max, right.max);
-	int* factors = new int[max - min + 1];
-	for (int i = min; i <= max; i++)
-		factors[i - min] = left[i] + right[i];
-	return Polynomial(min, max, factors);
+	Polynomial result = left;
+	result += right;
+	return result;
 }
 
 //fixed int not const int&

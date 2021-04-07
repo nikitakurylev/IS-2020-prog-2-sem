@@ -19,6 +19,7 @@ public:
 	Polynomial(const Polynomial& other);
 	virtual ~Polynomial();
 	virtual Polynomial& operator= (const Polynomial& other);
+	virtual Polynomial& operator+=(const Polynomial& other);
 
 	int operator[](int idx) const;
 	int& operator[](int idx);
@@ -27,6 +28,7 @@ public:
 	friend bool operator==(const Polynomial& left, const Polynomial& right);
 
 	friend const Polynomial operator*(const Polynomial& left, const Polynomial& right);
+	//fixed + from +=
 	friend const Polynomial operator+(const Polynomial& left, const Polynomial& right);
 	friend const Polynomial operator*(const Polynomial& left, const int right);
 	friend const Polynomial operator/(const Polynomial& left, const int right);
