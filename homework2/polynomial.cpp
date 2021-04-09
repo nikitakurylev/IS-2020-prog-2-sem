@@ -95,22 +95,26 @@ const Polynomial operator+(const Polynomial& left, const Polynomial& right) {
 	result += right;
 	return result;
 }
-
-//todo * from *=
+Polynomial& Polynomial::operator*=(int other) {
+	for (int i = 0; i < max - min + 1; i++)
+		factors[i] = factors[i] * other;
+	return *this;
+}
+//fixed * from *=
 const Polynomial operator*(const Polynomial& left, int right) {
-	int count = left.max - left.min + 1;
-	int* factors = new int[count];
-	for (int i = 0; i < count; i++)
-		factors[i] = left.factors[i]*right;
-	return Polynomial(left.min, left.max, factors);
+	Polynomial result = left;
+	return result *= right;
+}
+
+Polynomial& Polynomial::operator/=(int other) {
+	for (int i = 0; i < max - min + 1; i++)
+		factors[i] = factors[i] / other;
+	return *this;
 }
 
 const Polynomial operator/(const Polynomial& left, const int right) {
-	int count = left.max - left.min + 1;
-	int* factors = new int[count];
-	for (int i = 0; i < count; i++)
-		factors[i] = left.factors[i] / right;
-	return Polynomial(left.min, left.max, factors);
+	Polynomial result = left;
+	return result /= right;
 }
 
 const Polynomial operator*(const int left, const Polynomial& right) {
