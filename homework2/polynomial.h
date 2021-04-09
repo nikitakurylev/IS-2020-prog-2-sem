@@ -20,6 +20,7 @@ public:
 	virtual ~Polynomial();
 	virtual Polynomial& operator= (const Polynomial& other);
 	virtual Polynomial& operator+=(const Polynomial& other);
+	virtual Polynomial& operator-=(const Polynomial& other);
 	virtual Polynomial& operator*=(const int other);
 	virtual Polynomial& operator/=(const int other);
 
@@ -32,6 +33,7 @@ public:
 	friend const Polynomial operator*(const Polynomial& left, const Polynomial& right);
 	//fixed + from +=
 	friend const Polynomial operator+(const Polynomial& left, const Polynomial& right);
+	friend const Polynomial operator-(const Polynomial& left, const Polynomial& right);
 	friend const Polynomial operator*(const Polynomial& left, const int right);
 	friend const Polynomial operator/(const Polynomial& left, const int right);
 	friend const Polynomial operator*(const int left, const Polynomial& right);

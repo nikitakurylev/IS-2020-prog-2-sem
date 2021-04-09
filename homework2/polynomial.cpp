@@ -34,6 +34,11 @@ Polynomial& Polynomial::operator+=(const Polynomial& other) {
 	return *this;
 }
 
+Polynomial& Polynomial::operator-=(const Polynomial& other) {
+	*this += -other;
+	return *this;
+}
+
 int Polynomial::operator[](int idx) const {
 	if (idx<min || idx > max)
 		return 0;
@@ -93,6 +98,11 @@ const Polynomial operator*(const Polynomial& left, const Polynomial& right) {
 const Polynomial operator+(const Polynomial& left, const Polynomial& right) {
 	Polynomial result = left;
 	result += right;
+	return result;
+}
+const Polynomial operator-(const Polynomial& left, const Polynomial& right) {
+	Polynomial result = left;
+	result -= right;
 	return result;
 }
 Polynomial& Polynomial::operator*=(int other) {
