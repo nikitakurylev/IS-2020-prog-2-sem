@@ -34,7 +34,6 @@ Polynomial& Polynomial::operator+=(const Polynomial& other) {
 	return *this;
 }
 
-//fixed return int
 int Polynomial::operator[](int idx) const {
 	if (idx<min || idx > max)
 		return 0;
@@ -67,7 +66,6 @@ const Polynomial operator-(const Polynomial& obj) {
 	return obj * (-1);
 }
 
-//fixed const bool ???
 bool operator==(const Polynomial& left, const Polynomial& right)
 {
 	int min = std::min(left.min, right.min);
@@ -98,7 +96,7 @@ const Polynomial operator+(const Polynomial& left, const Polynomial& right) {
 	return result;
 }
 
-//fixed int not const int&
+//todo * from *=
 const Polynomial operator*(const Polynomial& left, int right) {
 	int count = left.max - left.min + 1;
 	int* factors = new int[count];
@@ -119,7 +117,6 @@ const Polynomial operator*(const int left, const Polynomial& right) {
 	return right * left;
 }
 
-//fixed what???
 
 std::ostream& operator<<(std::ostream& os, const Polynomial& obj){
 	if (obj.max - obj.min == 0 && obj.factors[0] == 0) {
@@ -145,7 +142,6 @@ std::ostream& operator<<(std::ostream& os, const Polynomial& obj){
 	return os;
 }
 
-//fixed O(n)
 double Polynomial::get(int x) {
 	double result = 0;
 	double xpow = pow(x, min);
