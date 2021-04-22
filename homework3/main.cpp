@@ -36,7 +36,14 @@ int main() {
         replace(stationRoutes.begin(), stationRoutes.end(), '.', ',');
         vector<string> routeNumbers = split(stationRoutes,',');
         for(int i = 0; i < routeNumbers.size(); i++){
-            
+            int number = atoi(routeNumbers[i].c_str());
+            if (routes[vehicleType].count(number) > 0) {
+                routes[vehicleType].insert(pair<int, Station>(number, Route()));
+                routes[vehicleType][number].AddStation(Station(stationNode.child_value("name_stopping"), vehicleType, 0, 0));
+            }
+            else {
+
+            }
         }
     }
 
