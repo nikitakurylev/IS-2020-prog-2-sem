@@ -1,2 +1,4 @@
 C:\Users\nkuri\Documents\GitHub\IS-2020-prog-2-sem\homework3\Debug\homework3.exe
 C:\Users\nkuri\Documents\GitHub\IS-2020-prog-2-sem\homework3\Debug\homework3.pdb
+C:\Users\Nikita\Documents\GitHub\IS-2020-prog-2-sem\homework3\Debug\homework3.exe
+C:\Users\Nikita\Documents\GitHub\IS-2020-prog-2-sem\homework3\Debug\homework3.pdb

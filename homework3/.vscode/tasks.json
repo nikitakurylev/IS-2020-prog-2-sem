@@ -1,0 +1,34 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++.exe сборка активного файла",
+            "command": "C:\\Program Files\\gcc\\bin\\g++.exe",
+          "args": [
+            "-g",
+            "-Wall",
+            "-Wextra",
+            "pugixml.cpp",
+            "main.cpp",
+            "routes.hpp",
+            "routes.cpp",
+            "pugixml.hpp",
+            "pugiconfig.hpp",
+            "-o",
+            "${fileDirname}\\${fileBasenameNoExtension}.exe"
+          ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Задача создана отладчиком."
+        }
+    ],
+    "version": "2.0.0"
+}
