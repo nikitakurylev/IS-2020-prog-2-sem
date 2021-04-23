@@ -22,12 +22,10 @@ std::vector<std::string> split(const std::string& s, char delimiter)
 }
 
 int main() {
-    //setlocale(LC_ALL, "Russian");
     map<string, map<string, Route>> routes;
     map<string, int> streets;
 
     xml_document doc;
-    xml_parse_result result = doc.load_file("tree.xml");
     ofstream out;
     out.open("output.txt");
     xml_node dataset = doc.child("dataset");
@@ -39,13 +37,13 @@ int main() {
         string stationName = stationNode.child_value("name_stopping");
         string stationCoords = stationNode.child_value("coordinates");
         vector<string> coords = split(stationCoords, ',');
-        for(int i = 0; i < routeNumbers.size(); i++){
+        for(size_t i = 0; i < routeNumbers.size(); i++){
             routes[vehicleType][routeNumbers[i]].AddStation(Station(stationName, vehicleType, atof(coords[0].c_str()), atof(coords[0].c_str())));
         }
 
         string stationLocation = stationNode.child_value("location");
         vector<string> stationStreets = split(stationLocation, ',');
-        for (int i = 0; i < stationStreets.size(); i++)
+        for (size_t i = 0; i < stationStreets.size(); i++)
             streets[stationStreets[i]]++;
     }
 
