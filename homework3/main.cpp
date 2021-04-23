@@ -26,6 +26,7 @@ int main() {
     map<string, int> streets;
 
     xml_document doc;
+    doc.load_file("tree.xml");
     ofstream out;
     out.open("output.txt");
     xml_node dataset = doc.child("dataset");
@@ -47,17 +48,18 @@ int main() {
             streets[stationStreets[i]]++;
     }
 
-    for (std::map<string, map<string, Route>>::const_iterator it = routes.begin(); it != routes.end(); ++it) {
+    for (std::map<string, map<string, Route>>::iterator it = routes.begin(); it != routes.end(); ++it) {
         string maxRoute = "";
         int maxRouteN = -1;
         string maxLengthRoute = "";
         double maxRouteLength = -1;
-        for (std::map<string, Route>::const_iterator rit = it->second.begin(); rit != it->second.end(); ++rit) {
+        for (std::map<string, Route>::iterator rit = it->second.begin(); rit != it->second.end(); ++rit) {
             int curN = rit->second.GetN();
             if (curN > maxRouteN) {
                 maxRoute = rit->first;
                 maxRouteN = curN;
             }
+            rit->second.sort();
             double curLength = rit->second.length();
             if (curLength > maxRouteLength) {
                 maxLengthRoute = rit->first;

@@ -1,10 +1,10 @@
 Автобус
  Most numerous route № 211, count: 124
- Longest route № 487, length: 8.21278
+ Longest route № 487, length: 0.461469
 Трамвай
  Most numerous route № 27, count: 74
- Longest route № 27, length: 2.10921
+ Longest route № 6, length: 0.160103
 Троллейбус
  Most numerous route № 11, count: 76
- Longest route № 16, length: 2.05117
+ Longest route № 16, length: 0.145749
 Most numerous street Таллинское ш., count 92

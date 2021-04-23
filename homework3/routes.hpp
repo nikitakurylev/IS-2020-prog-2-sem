@@ -33,6 +33,7 @@ public:
     int GetN() const {
         return stations.size();
     }
+    void sort();
     double length() const;
 private:
     vector<Station> stations;
