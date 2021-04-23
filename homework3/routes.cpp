@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <math.h>
 void Route::sort() {   
+	//todo const&
     std::sort(stations.begin(), stations.end(), [](Station a, Station b) {
         return a.GetX() * a.GetX() + a.GetY() * a.GetY() < b.GetX() * b.GetX() + b.GetY() * b.GetY();
         });

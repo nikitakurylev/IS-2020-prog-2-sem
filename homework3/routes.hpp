@@ -5,7 +5,7 @@
 #include <vector>
 using namespace std;
 
-class Station{
+class Station {
 public:
     Station(string stationName, string stationType, double stationX, double stationY) 
         : name(stationName)
@@ -13,6 +13,7 @@ public:
         , x(stationX)
         , y(stationY)
     {}
+    //todo getX
     double GetX() const {
         return x;
     }

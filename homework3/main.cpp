@@ -48,6 +48,7 @@ int main() {
             streets[stationStreets[i]]++;
     }
 
+    //todo range-based for with unpacking
     for (std::map<string, map<string, Route>>::iterator it = routes.begin(); it != routes.end(); ++it) {
         string maxRoute = "";
         int maxRouteN = -1;
