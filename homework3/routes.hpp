@@ -13,6 +13,12 @@ public:
         , x(stationX)
         , y(stationY)
     {}
+    double GetX() const {
+        return x;
+    }
+    double GetY() const {
+        return y;
+    }
 private:
     string name;
     string vehicletype;
@@ -24,6 +30,10 @@ public:
     void AddStation(Station station){
         stations.push_back(station);
     }
+    int GetN() const {
+        return stations.size();
+    }
+    double length() const;
 private:
     vector<Station> stations;
 };
