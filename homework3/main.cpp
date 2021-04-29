@@ -49,33 +49,39 @@ int main() {
     }
 
     //fixed range-based for with unpacking
-    for (auto&& it : routes){
+    string transport;
+    map<string, Route> routesoftype;
+    for (auto&& [transport, routesoftype] : routes){
         string maxRoute = "";
         int maxRouteN = -1;
         string maxLengthRoute = "";
         double maxRouteLength = -1;
-        for (auto&& rit : it.second) {
-            int curN = rit.second.getN();
+        string routename;
+        Route route;
+        for (auto&& [routename, route] : routesoftype) {
+            int curN = route.getN();
             if (curN > maxRouteN) {
-                maxRoute = rit.first;
+                maxRoute = routename;
                 maxRouteN = curN;
             }
-            rit.second.sort();
-            double curLength = rit.second.length();
+            route.sort();
+            double curLength = route.length();
             if (curLength > maxRouteLength) {
-                maxLengthRoute = rit.first;
+                maxLengthRoute = routename;
                 maxRouteLength = curLength;
             }
         }
-        out << it.first << "\n Most numerous route ¹ " << maxRoute << ", count: " << maxRouteN << "\n";
+        out << transport << "\n Most numerous route ¹ " << maxRoute << ", count: " << maxRouteN << "\n";
         out  << " Longest route ¹ " << maxLengthRoute << ", length: " << maxRouteLength << "\n";
     }
 
 
     string maxstreet = "";
-    for (auto&& it : streets)
-        if (it.second > streets[maxstreet])
-            maxstreet = it.first;
+    int count;
+    string streetname;
+    for (auto&& [streetname, count] : streets)
+        if (count > streets[maxstreet])
+            maxstreet = streetname;
 
     out << "Most numerous street " << maxstreet << ", count " << streets[maxstreet];
 
