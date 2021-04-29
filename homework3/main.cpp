@@ -48,34 +48,34 @@ int main() {
             streets[stationStreets[i]]++;
     }
 
-    //todo range-based for with unpacking
-    for (std::map<string, map<string, Route>>::iterator it = routes.begin(); it != routes.end(); ++it) {
+    //fixed range-based for with unpacking
+    for (auto&& it : routes){
         string maxRoute = "";
         int maxRouteN = -1;
         string maxLengthRoute = "";
         double maxRouteLength = -1;
-        for (std::map<string, Route>::iterator rit = it->second.begin(); rit != it->second.end(); ++rit) {
-            int curN = rit->second.GetN();
+        for (auto&& rit : it.second) {
+            int curN = rit.second.getN();
             if (curN > maxRouteN) {
-                maxRoute = rit->first;
+                maxRoute = rit.first;
                 maxRouteN = curN;
             }
-            rit->second.sort();
-            double curLength = rit->second.length();
+            rit.second.sort();
+            double curLength = rit.second.length();
             if (curLength > maxRouteLength) {
-                maxLengthRoute = rit->first;
+                maxLengthRoute = rit.first;
                 maxRouteLength = curLength;
             }
         }
-        out << it->first << "\n Most numerous route ¹ " << maxRoute << ", count: " << maxRouteN << "\n";
+        out << it.first << "\n Most numerous route ¹ " << maxRoute << ", count: " << maxRouteN << "\n";
         out  << " Longest route ¹ " << maxLengthRoute << ", length: " << maxRouteLength << "\n";
     }
 
 
     string maxstreet = "";
-    for (std::map<string, int>::const_iterator it = streets.begin(); it != streets.end(); ++it)
-        if (it->second > streets[maxstreet])
-            maxstreet = it->first;
+    for (auto&& it : streets)
+        if (it.second > streets[maxstreet])
+            maxstreet = it.first;
 
     out << "Most numerous street " << maxstreet << ", count " << streets[maxstreet];
 

@@ -13,11 +13,11 @@ public:
         , x(stationX)
         , y(stationY)
     {}
-    //todo getX
-    double GetX() const {
+    //fixed getX
+    double getX() const {
         return x;
     }
-    double GetY() const {
+    double getY() const {
         return y;
     }
 private:
@@ -31,7 +31,7 @@ public:
     void AddStation(Station station){
         stations.push_back(station);
     }
-    int GetN() const {
+    int getN() const {
         return stations.size();
     }
     void sort();
