@@ -60,12 +60,7 @@ bool isSorted(T1 begin, T1 end, T2 comp) {
 }
 template<class T1>
 bool isSorted(T1 begin, T1 end) {
-	while (begin + 1 != end) {
-		if (*begin > *(begin + 1))
-			return false;
-		++begin;
-	}
-	return true;
+	return isSorted(begin, end, [](auto x, auto y){return x < y;});
 }
 
 template<class T1, class T2>
