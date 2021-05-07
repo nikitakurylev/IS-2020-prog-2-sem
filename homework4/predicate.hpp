@@ -1,13 +1,11 @@
 #ifndef PREDICATE_H
 #define PREDICATE_H
 #include <iterator>
-#include <iostream>
-using namespace std;
-//todo without std
-//todo T1 and T2 are bad names
-//todo isSorted should use default tempalte argument std::less
-template<class T1, class T2>
-bool allOf(T1 begin, T1 end, T2 comp) {
+//fixed without std
+//fixed T1 and T2 are bad names
+//fixed isSorted should use default tempalte argument std::less
+template<class TIterator, class TComparator>
+bool allOf(TIterator begin, TIterator end, TComparator comp) {
 	while (begin != end) {
 		if (!comp(*begin))
 			return false;
@@ -16,8 +14,8 @@ bool allOf(T1 begin, T1 end, T2 comp) {
 	return true;
 }
 
-template<class T1, class T2>
-bool anyOf(T1 begin, T1 end, T2 comp) {
+template<class TIterator, class TComparator>
+bool anyOf(TIterator begin, TIterator end, TComparator comp) {
 	while (begin != end) {
 		if (comp(*begin))
 			return true;
@@ -26,8 +24,8 @@ bool anyOf(T1 begin, T1 end, T2 comp) {
 	return false;
 }
 
-template<class T1, class T2>
-bool noneOf(T1 begin, T1 end, T2 comp) {
+template<class TIterator, class TComparator>
+bool noneOf(TIterator begin, TIterator end, TComparator comp) {
 	while (begin != end) {
 		if (comp(*begin))
 			return false;
@@ -36,8 +34,8 @@ bool noneOf(T1 begin, T1 end, T2 comp) {
 	return true;
 }
 
-template<class T1, class T2>
-bool oneOf(T1 begin, T1 end, T2 comp) {
+template<class TIterator, class TComparator>
+bool oneOf(TIterator begin, TIterator end, TComparator comp) {
 	bool result = false;
 	while (begin != end) {
 		if (comp(*begin)) {
@@ -52,8 +50,8 @@ bool oneOf(T1 begin, T1 end, T2 comp) {
 }
 
 
-template<class T1, class T2>
-bool isSorted(T1 begin, T1 end, T2 comp) {
+template<class TIterator, class TComparator = std::less<>>
+bool isSorted(TIterator begin, TIterator end, TComparator comp = TComparator()) {
 	while (begin + 1 != end) {
 		if (!comp(*begin, *(begin + 1)))
 			return false;
@@ -61,13 +59,9 @@ bool isSorted(T1 begin, T1 end, T2 comp) {
 	}
 	return true;
 }
-template<class T1>
-bool isSorted(T1 begin, T1 end) {
-	return isSorted(begin, end, [](auto x, auto y){return x < y;});
-}
 
-template<class T1, class T2>
-bool isPartitioned(T1 begin, T1 end, T2 comp) {
+template<class TIterator, class TComparator>
+bool isPartitioned(TIterator begin, TIterator end, TComparator comp) {
 	bool result = false;
 	while (begin + 1 != end) {
 		if (comp(*begin) != comp(*(begin + 1))) {
@@ -81,8 +75,8 @@ bool isPartitioned(T1 begin, T1 end, T2 comp) {
 	return result;
 }
 
-template<class T1, class T2>
-T1 findNot(T1 begin, T1 end, T2 a) {
+template<class TIterator, class TComparator>
+TIterator findNot(TIterator begin, TIterator end, TComparator a) {
 	while (begin != end) {
 		if (*begin != a)
 			break;
@@ -91,9 +85,9 @@ T1 findNot(T1 begin, T1 end, T2 a) {
 	return begin;
 }
 
-template<class T1, class T2>
-T1 findBackward(T1 begin, T1 end, T2 a) {
-    T1 result = end;
+template<class TIterator, class TComparator>
+TIterator findBackward(TIterator begin, TIterator end, TComparator a) {
+    TIterator result = end;
 	while (begin != end) {
 		if (*begin == a)
 			result = begin;
@@ -102,8 +96,8 @@ T1 findBackward(T1 begin, T1 end, T2 a) {
 	return result;
 }
 
-template<class T1, class T2>
-bool isPalindrome(T1 begin, T1 end, T2 comp){
+template<class TIterator, class TComparator>
+bool isPalindrome(TIterator begin, TIterator end, TComparator comp){
     --end;
 	while (distance(begin, end) > 0) {
 		if (!comp(*begin, *end))
