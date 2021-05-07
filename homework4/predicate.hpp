@@ -3,7 +3,9 @@
 #include <iterator>
 #include <iostream>
 using namespace std;
-
+//todo without std
+//todo T1 and T2 are bad names
+//todo isSorted should use default tempalte argument std::less
 template<class T1, class T2>
 bool allOf(T1 begin, T1 end, T2 comp) {
 	while (begin != end) {
@@ -48,6 +50,7 @@ bool oneOf(T1 begin, T1 end, T2 comp) {
 	}
 	return result;
 }
+
 
 template<class T1, class T2>
 bool isSorted(T1 begin, T1 end, T2 comp) {
