@@ -1,11 +1,11 @@
 #ifndef PREDICATE_H
 #define PREDICATE_H
 #include <iterator>
-#include <vector>
 #include <iostream>
 using namespace std;
 
-bool allOf(vector<int>::iterator begin, vector<int>::iterator end, bool comp(int)) {
+template<class T1, class T2>
+bool allOf(T1 begin, T1 end, T2 comp) {
 	while (begin != end) {
 		if (!comp(*begin))
 			return false;
@@ -14,7 +14,8 @@ bool allOf(vector<int>::iterator begin, vector<int>::iterator end, bool comp(int
 	return true;
 }
 
-bool anyOf(vector<int>::iterator begin, vector<int>::iterator end, bool comp(int)) {
+template<class T1, class T2>
+bool anyOf(T1 begin, T1 end, T2 comp) {
 	while (begin != end) {
 		if (comp(*begin))
 			return true;
@@ -23,7 +24,8 @@ bool anyOf(vector<int>::iterator begin, vector<int>::iterator end, bool comp(int
 	return false;
 }
 
-bool noneOf(vector<int>::iterator begin, vector<int>::iterator end, bool comp(int)) {
+template<class T1, class T2>
+bool noneOf(T1 begin, T1 end, T2 comp) {
 	while (begin != end) {
 		if (comp(*begin))
 			return false;
@@ -32,7 +34,8 @@ bool noneOf(vector<int>::iterator begin, vector<int>::iterator end, bool comp(in
 	return true;
 }
 
-bool oneOf(vector<int>::iterator begin, vector<int>::iterator end, bool comp(int)) {
+template<class T1, class T2>
+bool oneOf(T1 begin, T1 end, T2 comp) {
 	bool result = false;
 	while (begin != end) {
 		if (comp(*begin)) {
@@ -65,7 +68,8 @@ bool isSorted(T1 begin, T1 end) {
 	return true;
 }
 
-bool isPartitioned(vector<int>::iterator begin, vector<int>::iterator end, bool comp(int)) {
+template<class T1, class T2>
+bool isPartitioned(T1 begin, T1 end, T2 comp) {
 	bool result = false;
 	while (begin + 1 != end) {
 		if (comp(*begin) != comp(*(begin + 1))) {
@@ -79,7 +83,8 @@ bool isPartitioned(vector<int>::iterator begin, vector<int>::iterator end, bool 
 	return result;
 }
 
-vector<int>::iterator findNot(vector<int>::iterator begin, vector<int>::iterator end, int a) {
+template<class T1, class T2>
+T1 findNot(T1 begin, T1 end, T2 a) {
 	while (begin != end) {
 		if (*begin != a)
 			break;
@@ -88,14 +93,15 @@ vector<int>::iterator findNot(vector<int>::iterator begin, vector<int>::iterator
 	return begin;
 }
 
-vector<int>::iterator findBackward(vector<int>::iterator begin, vector<int>::iterator end, int a) {
-    vector<int>::iterator finish = end;
+template<class T1, class T2>
+T1 findBackward(T1 begin, T1 end, T2 a) {
+    T1 result = end;
 	while (begin != end) {
-		if (*end == a)
-	        return end;
-		--end;
+		if (*begin == a)
+			result = begin;
+		++begin;
 	}
-	return finish;
+	return result;
 }
 
 template<class T1, class T2>
