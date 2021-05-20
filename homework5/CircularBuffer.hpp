@@ -1,6 +1,7 @@
-#pragma once
+#ifndef CIRCULARBUFFER_H
+#define CIRCULARBUFFER_H
 #include <iterator>
-
+using namespace std;
 template <typename bufferType>
 class CircularBuffer {
 public:
@@ -10,8 +11,8 @@ public:
 		using iterator_category = std::random_access_iterator_tag;
 		using difference_type = std::ptrdiff_t;
 		using value_type = bufferType;
-		using pointer = bufferType*;  // or also value_type*
-		using reference = bufferType&;  // or also value_type&
+		using pointer = bufferType*;
+		using reference = bufferType&;
 
 		Iterator(pointer ptr) : m_ptr(ptr) {}
 
@@ -19,7 +20,12 @@ public:
 		pointer operator->() { return m_ptr; }
 
 		Iterator& operator++() { m_ptr++; return *this; }
-		Iterator operator++(int) { Iterator tmp = *this; ++(*this); return tmp; }
+		Iterator operator++(int)
+		{
+			Iterator tmp = *this;
+			++(*this);
+			return tmp;
+		}
 		Iterator& operator--() { m_ptr--; return *this; }
 		Iterator operator--(int) { Iterator tmp = *this; --(*this); return tmp; }
 
@@ -107,13 +113,13 @@ public:
 	}
 	int operator[](int i) const {
 		if (i < 0 || i >= size)
-			throw exception("Out of range");
+			throw out_of_range("Out of range");
 		return buffer[i];
 	}
 
 	int& operator[](int i) {
 		if (i < 0 || i >= size)
-			throw exception("Out of range");
+			throw out_of_range("Out of range");
 		return buffer[i];
 	}
 
@@ -130,3 +136,4 @@ private:
 	int size, bstart, bend;
 	bufferType* buffer;
 };
+#endif
