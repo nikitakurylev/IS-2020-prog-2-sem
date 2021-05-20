@@ -1,56 +1,95 @@
 #pragma once
 #include <iterator>
 
-template <typename T>
+template <typename bufferType>
 class CircularBuffer {
 public:
 	struct Iterator
 	{
 	public:
-		using iterator_category = std::bidirectional_iterator_tag;
+		using iterator_category = std::random_access_iterator_tag;
 		using difference_type = std::ptrdiff_t;
-		using value_type = T;
-		using pointer = T*;  // or also value_type*
-		using reference = T&;  // or also value_type&
+		using value_type = bufferType;
+		using pointer = bufferType*;  // or also value_type*
+		using reference = bufferType&;  // or also value_type&
 
 		Iterator(pointer ptr) : m_ptr(ptr) {}
 
 		reference operator*() const { return *m_ptr; }
 		pointer operator->() { return m_ptr; }
 
-		// Prefix increment
 		Iterator& operator++() { m_ptr++; return *this; }
-
-		// Postfix increment
 		Iterator operator++(int) { Iterator tmp = *this; ++(*this); return tmp; }
+		Iterator& operator--() { m_ptr--; return *this; }
+		Iterator operator--(int) { Iterator tmp = *this; --(*this); return tmp; }
 
 		friend bool operator== (const Iterator& a, const Iterator& b) { return a.m_ptr == b.m_ptr; };
 		friend bool operator!= (const Iterator& a, const Iterator& b) { return a.m_ptr != b.m_ptr; };
 
-		friend Iterator& operator- (const Iterator& a, const Iterator& b) { return Iterator(a.m_ptr - b.m_ptr); };
+		template<typename nType>
+		Iterator& operator+=(nType n) {
+			difference_type m = n;
+			if (m >= 0) while (m--) ++*this;
+			else while (m++) --*this;
+			return *this;
+		}
+
+		template<typename nType>
+		friend Iterator operator+(const Iterator& a, nType n) {
+			Iterator temp = a;
+			return temp += n;
+		}
+		template<typename nType>
+		friend Iterator operator+(nType n, const Iterator& a) {
+			return a + n;
+		}
+		template<typename nType>
+		Iterator& operator-=(nType n) {
+			return *this += -n;
+		}
+		template<typename nType>
+		friend Iterator operator-(const Iterator& a, nType n) {
+			Iterator temp = a;
+			return temp -= n;
+		}
+		friend long long operator-(const Iterator& a, const Iterator& b) {
+			return b.m_ptr - a.m_ptr;
+		}
+		template<typename nType>
+		reference operator[](nType n) const {
+			return *(this + n);
+		}
+		friend bool operator< (const Iterator& a, const Iterator& b) { return b - a > 0; };
+		friend bool operator> (const Iterator& a, const Iterator& b) { return b < a; };
+		friend bool operator>= (const Iterator& a, const Iterator& b) { return !(a < b); };
+		friend bool operator<= (const Iterator& a, const Iterator& b) { return !(a > b); };
+
 
 	private:
 		pointer m_ptr;
 	};
 
-	CircularBuffer() {
-	};
 	CircularBuffer(int count) : size(count) {
-		buffer = new T[size];
+		buffer = new bufferType[size];
 	}
+
+	~CircularBuffer() {
+		delete[] buffer;
+	}
+
 	Iterator begin() const {
 		return Iterator(&buffer[0]);
 	}
 	Iterator end() const {
 		return Iterator(&buffer[size - 1]);
 	}
-	T first() {
+	bufferType first() {
 		return buffer[bstart];
 	}
-	T last() {
+	bufferType last() {
 		return buffer[bend];
 	}
-	void addFirst(T value) {
+	void addFirst(bufferType value) {
 		bstart = (size + bstart - 1) % bstart;
 		buffer[bstart] = value;
 	}
@@ -58,7 +97,7 @@ public:
 		buffer[bstart] = 0;
 		bstart = (bstart + 1) % bstart;
 	}
-	void addLast(T value) {
+	void addLast(bufferType value) {
 		bend = (bend + 1) % bstart;
 		buffer[bstart] = value;
 	}
@@ -79,7 +118,7 @@ public:
 	}
 
 	void changeCapacity(int newsize) {
-		T* newbuffer = new T[newsize];
+		bufferType* newbuffer = new bufferType[newsize];
 		for (int i = 0; i < min(size, newsize); i++) {
 			newbuffer[i] = buffer[i];
 		}
@@ -89,5 +128,5 @@ public:
 
 private:
 	int size, bstart, bend;
-	T* buffer;
+	bufferType* buffer;
 };
