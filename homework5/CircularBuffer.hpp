@@ -1,6 +1,8 @@
 #ifndef CIRCULARBUFFER_H
 #define CIRCULARBUFFER_H
 #include <iterator>
+#include <stdexcept>
+#include <iostream>
 using namespace std;
 template <typename bufferType>
 class CircularBuffer {
@@ -13,20 +15,32 @@ public:
 		using value_type = bufferType;
 		using pointer = bufferType*;
 		using reference = bufferType&;
-
+		
 		Iterator(pointer ptr) : m_ptr(ptr) {}
+		Iterator(pointer ptr, pointer begin, pointer end) : m_ptr(ptr), bbegin(begin), bend(end) {}
 
 		reference operator*() const { return *m_ptr; }
 		pointer operator->() { return m_ptr; }
 
-		Iterator& operator++() { m_ptr++; return *this; }
-		Iterator operator++(int)
-		{
+		Iterator& operator++() {
+			if(m_ptr == bend)
+				m_ptr = bbegin;
+			else
+				m_ptr++; 
+			return *this; 
+		}
+		Iterator operator++(int) {
 			Iterator tmp = *this;
 			++(*this);
 			return tmp;
 		}
-		Iterator& operator--() { m_ptr--; return *this; }
+		Iterator& operator--() { 
+			if(m_ptr == bbegin)
+				m_ptr = bend;
+			else
+				m_ptr--; 
+			return *this; 
+		}
 		Iterator operator--(int) { Iterator tmp = *this; --(*this); return tmp; }
 
 		friend bool operator== (const Iterator& a, const Iterator& b) { return a.m_ptr == b.m_ptr; };
@@ -73,10 +87,15 @@ public:
 
 	private:
 		pointer m_ptr;
+		pointer bbegin;
+		pointer bend;
 	};
 
-	CircularBuffer(int count) : size(count) {
+	CircularBuffer(int count) : size(count+1) {
 		buffer = new bufferType[size];
+		bstart = 1;
+		bend = 0;
+		cursize = 0;
 	}
 
 	~CircularBuffer() {
@@ -84,10 +103,10 @@ public:
 	}
 
 	Iterator begin() const {
-		return Iterator(&buffer[0]);
+		return Iterator(&buffer[bstart], &buffer[0], &buffer[size - 1]);
 	}
 	Iterator end() const {
-		return Iterator(&buffer[size - 1]);
+		return Iterator(&buffer[(bend + 1) % size], &buffer[0], &buffer[size - 1]);
 	}
 	bufferType first() {
 		return buffer[bstart];
@@ -96,44 +115,59 @@ public:
 		return buffer[bend];
 	}
 	void addFirst(bufferType value) {
-		bstart = (size + bstart - 1) % bstart;
+		bstart = (size + bstart - 1) % size;
 		buffer[bstart] = value;
+		if(cursize < size-1)
+			cursize++;
+		else
+			bend = (size + bend - 1) % size;
 	}
 	void delFirst() {
 		buffer[bstart] = 0;
-		bstart = (bstart + 1) % bstart;
+		bstart = (bstart + 1) % size;
+		cursize--;
 	}
 	void addLast(bufferType value) {
-		bend = (bend + 1) % bstart;
-		buffer[bstart] = value;
+		bend = (bend + 1) % size;
+		buffer[bend] = value;
+		if(cursize < size-1)
+			cursize++;
+		else
+			bstart = (bstart + 1) % size;
 	}
 	void delLast() {
-		buffer[bstart] = 0;
-		bend = (size + bend - 1) % bstart;
+		buffer[bend] = 0;
+		bend = (size + bend - 1) % size;
+		cursize--;
 	}
 	int operator[](int i) const {
-		if (i < 0 || i >= size)
+		if (i < 0 || i >= cursize)
 			throw out_of_range("Out of range");
-		return buffer[i];
+		return buffer[(bstart + i) % size];
 	}
 
 	int& operator[](int i) {
-		if (i < 0 || i >= size)
+		if (i < 0 || i >= cursize)
 			throw out_of_range("Out of range");
-		return buffer[i];
+		return buffer[(bstart + i) % size];
 	}
 
 	void changeCapacity(int newsize) {
+		newsize++;
 		bufferType* newbuffer = new bufferType[newsize];
 		for (int i = 0; i < min(size, newsize); i++) {
-			newbuffer[i] = buffer[i];
+			newbuffer[i] = buffer[(bstart + i) % size];
 		}
 		delete[] buffer;
 		buffer = newbuffer;
+		if(size < newsize)
+			size = newsize;
+		bstart = 0;
+		bend = bstart + cursize - 1;
 	}
 
 private:
-	int size, bstart, bend;
+	int size, bstart, bend, cursize;
 	bufferType* buffer;
 };
 #endif
