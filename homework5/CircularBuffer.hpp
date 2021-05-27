@@ -17,14 +17,16 @@ public:
 		using reference = bufferType&;
 		
 		Iterator(pointer ptr) : m_ptr(ptr) {}
-		Iterator(pointer ptr, pointer begin, pointer end) : m_ptr(ptr), bbegin(begin), bend(end) {}
+		Iterator(pointer ptr, pointer begin, pointer end, difference_type blap) : m_ptr(ptr), bbegin(begin), bend(end), lap(blap) {}
 
 		reference operator*() const { return *m_ptr; }
 		pointer operator->() { return m_ptr; }
 
 		Iterator& operator++() {
-			if(m_ptr == bend)
+			lap++;
+			if(m_ptr == bend){
 				m_ptr = bbegin;
+			}
 			else
 				m_ptr++; 
 			return *this; 
@@ -35,8 +37,10 @@ public:
 			return tmp;
 		}
 		Iterator& operator--() { 
-			if(m_ptr == bbegin)
+			lap--;
+			if(m_ptr == bbegin){
 				m_ptr = bend;
+			}
 			else
 				m_ptr--; 
 			return *this; 
@@ -72,8 +76,8 @@ public:
 			Iterator temp = a;
 			return temp -= n;
 		}
-		friend long long operator-(const Iterator& a, const Iterator& b) {
-			return b.m_ptr - a.m_ptr;
+		friend difference_type operator-(const Iterator& a, const Iterator& b) {
+			return a.lap - b.lap;
 		}
 		template<typename nType>
 		reference operator[](nType n) const {
@@ -89,6 +93,7 @@ public:
 		pointer m_ptr;
 		pointer bbegin;
 		pointer bend;
+		difference_type lap;
 	};
 
 	CircularBuffer(int count) : size(count+1) {
@@ -103,10 +108,12 @@ public:
 	}
 
 	Iterator begin() const {
-		return Iterator(&buffer[bstart], &buffer[0], &buffer[size - 1]);
+		return Iterator(&buffer[bstart], &buffer[0], &buffer[size - 1], bstart);
 	}
 	Iterator end() const {
-		return Iterator(&buffer[(bend + 1) % size], &buffer[0], &buffer[size - 1]);
+		if(bend < bstart)
+			return Iterator(&buffer[(bend + 1) % size], &buffer[0], &buffer[size - 1], size + bend + 1);
+		return Iterator(&buffer[(bend + 1) % size], &buffer[0], &buffer[size - 1], bend + 1);
 	}
 	bufferType first() {
 		return buffer[bstart];
