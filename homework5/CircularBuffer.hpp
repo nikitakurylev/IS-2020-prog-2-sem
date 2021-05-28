@@ -147,6 +147,7 @@ public:
 		bend = (size + bend - 1) % size;
 		cursize--;
 	}
+	//todo information about size and index in exception
 	int operator[](int i) const {
 		if (i < 0 || i >= cursize)
 			throw out_of_range("Out of range");
