@@ -147,16 +147,16 @@ public:
 		bend = (size + bend - 1) % size;
 		cursize--;
 	}
-	//todo information about size and index in exception
-	int operator[](int i) const {
+	//fixed information about size and index in exception
+	bufferType operator[](int i) const {
 		if (i < 0 || i >= cursize)
-			throw out_of_range("Out of range");
+			throw out_of_range("Out of range. Size is " + to_string(cursize) + ", but tried to access index " + to_string(i));
 		return buffer[(bstart + i) % size];
 	}
 
-	int& operator[](int i) {
+	bufferType& operator[](int i) {
 		if (i < 0 || i >= cursize)
-			throw out_of_range("Out of range");
+			throw out_of_range("Out of range. Size is " + to_string(cursize) + ", but tried to access index " + to_string(i));
 		return buffer[(bstart + i) % size];
 	}
 
