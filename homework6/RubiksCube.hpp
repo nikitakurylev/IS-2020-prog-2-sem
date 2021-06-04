@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RUBIKSCUBE_H
+#define RUBIKSCUBE_H
 #include <cstring>
 #include <string>
 #include <fstream>
@@ -446,16 +447,17 @@ private:
 std::ostream& operator<<(std::ostream& os, const RubiksCube& obj) {
 	for(int i = 0; i < 3; i++)
 		os << "    " << obj.faces[4][0][i] << obj.faces[4][1][i] << obj.faces[4][2][i] << "\n";
-	cout << "\n";
+	os << "\n";
 	for (int i = 0; i < 3; i++) {
 		os << obj.faces[0][0][i] << obj.faces[0][1][i] << obj.faces[0][2][i] << " ";
 		os << obj.faces[1][0][i] << obj.faces[1][1][i] << obj.faces[1][2][i] << " ";
 		os << obj.faces[2][0][i] << obj.faces[2][1][i] << obj.faces[2][2][i] << " ";
 		os << obj.faces[3][0][i] << obj.faces[3][1][i] << obj.faces[3][2][i] << "\n";
 	}
-	cout << "\n";
+	os << "\n";
 	for (int i = 0; i < 3; i++)
 		os << "    " << obj.faces[5][0][i] << obj.faces[5][1][i] << obj.faces[5][2][i] << "\n";
-	cout << "\n";
+	os << "\n";
 	return os;
 }
+#endif

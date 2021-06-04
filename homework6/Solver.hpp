@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SOLVER_H
+#define SOLVER_H
 #include "RubiksCube.hpp"
 string Solve(RubiksCube rc) {
 	//https://speedcubing.com.ua/howto/3x3
@@ -39,3 +40,4 @@ string Solve(RubiksCube rc) {
 		}
 	}
 }
+#endif
